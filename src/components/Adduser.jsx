@@ -1,8 +1,8 @@
 import React from 'react'
 
-const Adduser = ({user}) => {
+const Adduser = ({user,adduser}) => {
     
-    console.log(user)
+
   return (
     <>
          <th className="th"> {user.name?.first} </th>

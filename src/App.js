@@ -35,12 +35,12 @@ function App() {
   const {id,picture,email,name,location,dob}=user
   console.log(user)
    const [changeuser, setChangeuser] = useState([name])
+   const [adduser, setAdduser] = useState([])
  
  
    
-const changeClick=()=>{
-  
-}
+
+
 
 
   return (
@@ -86,7 +86,7 @@ const changeClick=()=>{
             <button className="btn" type="button" onClick={()=>getUsers()} >
               new user
             </button>
-            <button className="btn" type="button"  >
+            <button className="btn" type="button"  onClick={()=> setAdduser() } >
               add user
             </button>
           </div>
@@ -104,7 +104,7 @@ const changeClick=()=>{
               <tr className="body-tr">
                  
                  
-                 <Adduser user={user} />
+                 <Adduser adduser={adduser} user={user} />
                  
               </tr>
             </tbody>
