@@ -10,12 +10,13 @@ import padlockSvg from "./assets/padlock.svg";
 import cwSvg from "./assets/cw.svg";
 import Footer from "./components/footer/Footer";
 import axios from "axios";
+import Adduser from "./components/Adduser";
 
 const url = "https://randomuser.me/api/";
 const defaultImage = "https://randomuser.me/api/portraits/men/75.jpg";
 
 function App() {
-  const [user, setUser] = useState("");
+  const [user, setUser] = useState([]);
  
 
   const getUsers = async () => {
@@ -33,9 +34,14 @@ function App() {
   }, []);
   const {id,picture,email,name,location,dob}=user
   console.log(user)
-   const [changeuser, setChangeuser] = useState("name")
-   const [changeparagraf, setChangeparagraf] = useState(name)
+   const [changeuser, setChangeuser] = useState([name])
+ 
+ 
    
+const changeClick=()=>{
+  
+}
+
 
   return (
     <main>
@@ -77,10 +83,10 @@ function App() {
             </button>
           </div>
           <div className="btn-group">
-            <button className="btn" type="button">
+            <button className="btn" type="button" onClick={()=>getUsers()} >
               new user
             </button>
-            <button className="btn" type="button">
+            <button className="btn" type="button"  >
               add user
             </button>
           </div>
@@ -95,8 +101,14 @@ function App() {
               </tr>
             </thead>
             <tbody>
-              <tr className="body-tr"></tr>
+              <tr className="body-tr">
+                 
+                 
+                 <Adduser user={user} />
+                 
+              </tr>
             </tbody>
+              
           </table>
         </div>
       </div>
