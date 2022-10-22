@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import mailSvg from "./assets/mail.svg";
 import manSvg from "./assets/man.svg";
 import womanSvg from "./assets/woman.svg";
@@ -10,38 +10,35 @@ import padlockSvg from "./assets/padlock.svg";
 import cwSvg from "./assets/cw.svg";
 import Footer from "./components/footer/Footer";
 import axios from "axios";
-import Adduser from "./components/Adduser";
 
 const url = "https://randomuser.me/api/";
 const defaultImage = "https://randomuser.me/api/portraits/men/75.jpg";
 
 function App() {
-  const [user, setUser] = useState([]);
- 
+  const [date, setDate] = useState([]);
+  const [change, setChange] = useState("Name");
+  const [addUser, setAddUser] = useState([]);
+  const [value, setValue] = useState();
 
-  const getUsers = async () => {
+  const getApi = async () => {
     try {
       const { data } = await axios(url);
       console.log(data.results[0]);
-      setUser(data.results[0]);
+      setDate(data.results[0]);
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    getUsers();
+    getApi();
   }, []);
-  const {id,picture,email,name,location,dob}=user
-  console.log(user)
-   const [changeuser, setChangeuser] = useState([name])
-   const [adduser, setAdduser] = useState([])
- 
- 
-   
 
+  useEffect(() => {
+    setValue(`${name?.first} ${name?.last} `);
+  }, [date]);
 
-
+  const { name, dob, email, phone, picture, location, registered } = date;
 
   return (
     <main>
@@ -51,42 +48,84 @@ function App() {
       <div className="block">
         <div className="container">
           <img src={picture?.large} alt="random user" className="user-img" />
-          <p className="user-title">My {changeuser} is </p>
+          <p className="user-title">My {change} is</p>
           <p className="user-value">
-            
-            
-             </p>
+            <div>{value}</div>
+          </p>
+
           <div className="values-list">
-            <button className="icon" data-label="name"
-             onClick={()=> setChangeuser("name") } >
-              <img src={womanSvg}  alt="user" id="iconImg" />
+            <button
+              className="icon"
+              data-label="name"
+              value={name}
+              onClick={() => {
+                setValue(`${name?.first} ${name?.last} `);
+                setChange("Name");
+              }}
+            >
+              <img src={womanSvg} alt="user" id="iconImg" />
             </button>
-            <button className="icon" data-label="email"
-                onClick={()=> setChangeuser("email") } >
+            <button
+              className="icon"
+              data-label="email"
+              value={email}
+              onClick={() => {
+                setValue(` ${email} `);
+                setChange("Email");
+              }}
+            >
               <img src={mailSvg} alt="mail" id="iconImg" />
             </button>
-            <button className="icon" data-label="age"
-              onClick={()=> setChangeuser("age") } >
+            <button
+              className="icon"
+              data-label="age"
+              onClick={() => {
+                setValue(` ${dob?.age} `);
+                setChange("Age");
+              }}
+            >
               <img src={womanAgeSvg} alt="age" id="iconImg" />
             </button>
-            <button className="icon" data-label="street"
-               onClick={()=> setChangeuser("street") } >
+            <button
+              className="icon"
+              data-label="street"
+              onClick={() => {
+                setValue(location?.city);
+                setChange("Street");
+              }}
+            >
               <img src={mapSvg} alt="map" id="iconImg" />
             </button>
-            <button className="icon" data-label="phone"
-               onClick={()=> setChangeuser("phone") } >
+            <button
+              className="icon"
+              data-label="phone"
+              onClick={() => {
+                setValue(` ${phone} `);
+                setChange("Phone");
+              }}
+            >
               <img src={phoneSvg} alt="phone" id="iconImg" />
             </button>
-            <button className="icon" data-label="password"
-              onClick={()=> setChangeuser("password") }>
+            <button
+              className="icon"
+              data-label="password"
+              onClick={() => {
+                setValue(` ${email} `);
+                setChange("Email");
+              }}
+            >
               <img src={padlockSvg} alt="lock" id="iconImg" />
             </button>
           </div>
           <div className="btn-group">
-            <button className="btn" type="button" onClick={()=>getUsers()} >
+            <button className="btn" type="button" onClick={getApi}>
               new user
             </button>
-            <button className="btn" type="button"  onClick={()=> setAdduser() } >
+            <button
+              className="btn"
+              type="button"
+              onClick={() => setAddUser([...addUser, date])}
+            >
               add user
             </button>
           </div>
@@ -101,14 +140,18 @@ function App() {
               </tr>
             </thead>
             <tbody>
-              <tr className="body-tr">
-                 
-                 
-                 <Adduser adduser={adduser} user={user} />
-                 
-              </tr>
+              {addUser &&
+                addUser.map((user) => {
+                  return (
+                    <tr className="body-tr">
+                      <td>{user?.name?.first}</td>
+                      <td>{user?.email}</td>
+                      <td>{user?.phone}</td>
+                      <td>{user?.dob?.age}</td>
+                    </tr>
+                  );
+                })}
             </tbody>
-              
           </table>
         </div>
       </div>

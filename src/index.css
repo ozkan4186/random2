@@ -112,7 +112,7 @@ p {
   min-height: 40vh;
 }
 .bcg-orange {
-  background: var(--clr-orange-cw);
+  background-color:  hsl(360, 67%, 44%);
   text-align: center;
 }
 
@@ -205,9 +205,9 @@ p {
 }
 
 .head-tr {
-  background-color: hsl(39, 100%, 69%);
+  background-color:  hsl(360, 67%, 44%);
   height: 40px;
-  color: #9e4d8d;
+  color:aqua;
 }
 
 .table {
